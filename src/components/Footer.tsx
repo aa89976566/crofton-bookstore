@@ -13,6 +13,9 @@ export function Footer() {
         <p className="footer-meta">
           Online display only · Reserve by email · No accounts
         </p>
+        <p className="footer-credit">
+          Background texture adapted from D Sharon Pruitt (CC BY 2.0)
+        </p>
       </div>
     </footer>
   );

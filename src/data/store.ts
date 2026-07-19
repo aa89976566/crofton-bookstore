@@ -12,7 +12,10 @@ export const store = {
   },
   phone: "020 7998 8387",
   phoneHref: "tel:+442079988387",
-  /** Update this to the shop’s preferred reserve inbox */
+  /**
+   * Placeholder inbox for mailto reserve requests.
+   * Replace with the shop’s real address before going live.
+   */
   reserveEmail: "hello@croftonbooks.co.uk",
   instagram: "https://www.instagram.com/croftonbooks/",
   instagramHandle: "@croftonbooks",
