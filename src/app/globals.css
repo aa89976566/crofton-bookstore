@@ -41,7 +41,7 @@ body {
   background-color: #d8c3a0;
   background-image:
     linear-gradient(180deg, rgba(40, 24, 12, 0.18), rgba(40, 24, 12, 0.34)),
-    url("/textures/antique-pages.jpg");
+    var(--texture-antique);
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -675,7 +675,7 @@ textarea {
       rgba(248, 240, 226, 0.88),
       rgba(248, 240, 226, 0.92)
     ),
-    url("/textures/old-paper.jpg");
+    var(--texture-paper);
   background-size: cover;
   border-left: 1px solid var(--rule);
   transform: translateX(104%);
