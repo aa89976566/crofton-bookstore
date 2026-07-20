@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { books, categories, formatPrice, type Book } from "@/data/books";
-import { useReserve } from "./ReserveContext";
+import { useShop } from "./ShopContext";
 
 function CoverArt({ book }: { book: Book }) {
   const [failed, setFailed] = useState(false);
@@ -17,7 +17,7 @@ function CoverArt({ book }: { book: Book }) {
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`}
-        alt={book.title}
+        alt=""
         loading="lazy"
         onError={() => setFailed(true)}
       />
@@ -39,13 +39,24 @@ function CoverArt({ book }: { book: Book }) {
 
 export function BookShelf() {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
-  const { add } = useReserve();
+  const { openBook, query } = useShop();
 
   const visible = useMemo(() => {
-    if (filter === "All") return books;
-    if (filter === "Featured") return books.filter((b) => b.featured);
-    return books.filter((b) => b.category === filter);
-  }, [filter]);
+    const q = query.trim().toLowerCase();
+    let list = books;
+    if (filter === "Featured") list = list.filter((b) => b.featured);
+    else if (filter !== "All") list = list.filter((b) => b.category === filter);
+    if (q) {
+      list = list.filter(
+        (b) =>
+          b.title.toLowerCase().includes(q) ||
+          b.author.toLowerCase().includes(q) ||
+          b.category.toLowerCase().includes(q) ||
+          (b.isbn && b.isbn.includes(q)),
+      );
+    }
+    return list;
+  }, [filter, query]);
 
   return (
     <section id="shelf" className="collection">
@@ -64,29 +75,39 @@ export function BookShelf() {
         ))}
       </div>
 
-      <ul className="product-grid">
-        {visible.map((book) => (
-          <li key={book.id} className="product-cell">
-            <button
-              type="button"
-              className="grid-link"
-              onClick={() => add(book)}
-              aria-label={`Reserve ${book.title} by ${book.author}, ${formatPrice(book.price)}`}
-            >
-              <span className="grid-link__image">
-                <CoverArt book={book} />
-              </span>
-              <span className="grid-link__caption">
-                <span className="grid-link__title">
-                  {book.title}
-                  {book.author !== "Various" ? ` — ${book.author}` : "."}
+      {visible.length === 0 ? (
+        <p className="empty-shelf">
+          No titles match. Try another word, or email us a wish list.
+        </p>
+      ) : (
+        <ul className="product-grid">
+          {visible.map((book) => (
+            <li key={book.id} className="product-cell">
+              <button
+                type="button"
+                className="grid-link"
+                onClick={() => openBook(book)}
+                aria-label={`${book.title} by ${book.author}, ${formatPrice(book.price)}. Open details.`}
+              >
+                <span className="grid-link__image">
+                  <CoverArt book={book} />
                 </span>
-                <span className="grid-link__meta">{formatPrice(book.price)}</span>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+                <span className="grid-link__caption">
+                  <span className="grid-link__title">
+                    {book.author !== "Various"
+                      ? `${book.title}. ${book.author}`
+                      : `${book.title}.`}
+                  </span>
+                  <span className="grid-link__meta">
+                    {formatPrice(book.price)}
+                    <span className="grid-link__cond"> · {book.condition}</span>
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

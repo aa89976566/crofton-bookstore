@@ -3,10 +3,10 @@
 import { FormEvent, useMemo, useState } from "react";
 import { formatPrice } from "@/data/books";
 import { store } from "@/data/store";
-import { useReserve } from "./ReserveContext";
+import { useShop } from "./ShopContext";
 
 export function ReservePanel() {
-  const { items, count, remove, clear, isOpen, close } = useReserve();
+  const { items, count, remove, clear, reserveOpen, closeReserve } = useShop();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -21,7 +21,7 @@ export function ReservePanel() {
   function buildMailto() {
     const lines = items.map(
       (item) =>
-        `- ${item.book.title} by ${item.book.author} × ${item.qty} (${formatPrice(item.book.price)} each) [${item.book.id}]`,
+        `* ${item.book.title} by ${item.book.author} x ${item.qty} (${formatPrice(item.book.price)} each) [${item.book.id}] Condition: ${item.book.condition}`,
     );
     const body = [
       `Hello Crofton Books,`,
@@ -34,18 +34,18 @@ export function ReservePanel() {
       ``,
       `Name: ${name || "(please fill)"}`,
       `Email: ${email || "(please fill)"}`,
-      `Phone: ${phone || "—"}`,
+      `Phone: ${phone || "none"}`,
       ``,
       note ? `Note: ${note}` : "",
       ``,
       `I understand this is a reserve request, not an online purchase.`,
       `Thank you!`,
     ]
-      .filter(Boolean)
+      .filter((line) => line !== undefined)
       .join("\n");
 
     const subject = encodeURIComponent(
-      `Reserve request — ${count} title${count === 1 ? "" : "s"}`,
+      `Reserve request: ${count} title${count === 1 ? "" : "s"}`,
     );
     return `mailto:${store.reserveEmail}?subject=${subject}&body=${encodeURIComponent(body)}`;
   }
@@ -60,32 +60,31 @@ export function ReservePanel() {
   return (
     <>
       <div
-        className={`reserve-backdrop ${isOpen ? "is-open" : ""}`}
-        onClick={close}
-        aria-hidden={!isOpen}
+        className={`reserve-backdrop ${reserveOpen ? "is-open" : ""}`}
+        onClick={closeReserve}
+        aria-hidden={!reserveOpen}
       />
       <aside
         id="reserve"
-        className={`reserve-panel ${isOpen ? "is-open" : ""}`}
-        aria-hidden={!isOpen}
+        className={`reserve-panel ${reserveOpen ? "is-open" : ""}`}
+        aria-hidden={!reserveOpen}
         aria-label="Reserve list"
       >
         <div className="reserve-head">
           <h2>Reserve list</h2>
-          <button type="button" className="text-btn" onClick={close}>
+          <button type="button" className="text-btn" onClick={closeReserve}>
             Close
           </button>
         </div>
 
         <p className="reserve-note">
           We do not take online payments. Send an email reserve request and we
-          will confirm availability for collection or further arrangement.
+          will confirm availability for collection or postage.
         </p>
 
         {items.length === 0 ? (
           <p className="reserve-empty">
-            Your list is empty. Browse the shelf and add titles you hope to
-            hold.
+            Your list is empty. Open a title, then add it to reserve.
           </p>
         ) : (
           <ul className="reserve-list">
@@ -95,7 +94,7 @@ export function ReservePanel() {
                   <strong>{item.book.title}</strong>
                   <span>
                     {item.book.author} · {formatPrice(item.book.price)}
-                    {item.qty > 1 ? ` × ${item.qty}` : ""}
+                    {item.qty > 1 ? ` × ${item.qty}` : ""} · {item.book.condition}
                   </span>
                 </div>
                 <button
@@ -149,7 +148,7 @@ export function ReservePanel() {
                 rows={3}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                placeholder="Collection day, edition preference…"
+                placeholder="Collection day, postage, edition preference…"
               />
             </label>
             <button type="submit" className="btn btn-ink" disabled={!items.length}>

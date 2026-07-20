@@ -3,17 +3,19 @@
 import Link from "next/link";
 import { useState } from "react";
 import { store } from "@/data/store";
-import { useReserve } from "./ReserveContext";
+import { useShop } from "./ShopContext";
 
 const nav = [
   { href: "#shelf", label: "Books" },
+  { href: "#how", label: "How to reserve" },
+  { href: "#condition", label: "Condition" },
   { href: "#about", label: "About" },
   { href: "#visit", label: "Visit" },
   { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {
-  const { count, open, toggle } = useReserve();
+  const { count, toggleReserve, openReserve, query, setQuery } = useShop();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -31,7 +33,7 @@ export function Header() {
             <button
               type="button"
               className="cart-link"
-              onClick={() => toggle()}
+              onClick={() => toggleReserve()}
               aria-label={`Open reserve list, ${count} items`}
             >
               Reserve
@@ -63,7 +65,7 @@ export function Header() {
           <button
             type="button"
             className="mobile-cart"
-            onClick={() => open()}
+            onClick={() => openReserve()}
             aria-label={`Open reserve list, ${count} items`}
           >
             {count}
@@ -84,6 +86,20 @@ export function Header() {
               </a>
             ))}
           </nav>
+        </div>
+
+        <div className="wrapper search-row">
+          <label className="search-label" htmlFor="shelf-search">
+            Search
+          </label>
+          <input
+            id="shelf-search"
+            type="search"
+            className="search-input"
+            placeholder="Title, author, ISBN…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
         </div>
       </header>
     </>

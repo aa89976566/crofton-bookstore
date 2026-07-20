@@ -31,6 +31,12 @@ export function Footer() {
               <a href="#shelf">Books</a>
             </li>
             <li>
+              <a href="#how">How to reserve</a>
+            </li>
+            <li>
+              <a href="#condition">Condition</a>
+            </li>
+            <li>
               <a href="#about">About</a>
             </li>
             <li>

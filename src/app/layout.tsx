@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
+import { BookDetail } from "@/components/BookDetail";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ReservePanel } from "@/components/ReservePanel";
-import { ReserveProvider } from "@/components/ReserveContext";
+import { ShopProvider } from "@/components/ShopContext";
 import { store } from "@/data/store";
 import "./globals.css";
 
@@ -33,12 +34,13 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className="h-full">
       <body className="min-h-full antialiased" style={textureStyles}>
-        <ReserveProvider>
+        <ShopProvider>
           <Header />
           <main>{children}</main>
           <Footer />
+          <BookDetail />
           <ReservePanel />
-        </ReserveProvider>
+        </ShopProvider>
       </body>
     </html>
   );
