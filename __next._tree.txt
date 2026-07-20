@@ -1,0 +1,5 @@
+:HL["/crofton-bookstore/_next/static/chunks/19_tmshjcya8a.css","style"]
+:HL["/crofton-bookstore/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/crofton-bookstore/_next/static/media/30bdb5bb2b173ee1-s.p.0zb6_9j98fvm-.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/crofton-bookstore/_next/static/media/a6041e237e27a445-s.p.2lwxdxizmwehf.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"Zkg9q28g550KKAk18vELc"}
