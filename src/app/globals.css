@@ -27,9 +27,10 @@ body {
   font-family: var(--font-ui);
   font-size: 13px;
   line-height: 1.5;
-  background-color: #ebe2d4;
+  /* Tenderbooks-like white page; antique paper kept as a faint wash */
+  background-color: #fff;
   background-image:
-    linear-gradient(var(--paper-tint), var(--paper-tint)),
+    linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)),
     var(--texture-antique);
   background-size: cover;
   background-attachment: fixed;
@@ -89,7 +90,7 @@ button {
 
 .announce-message {
   margin: 0;
-  color: var(--announce);
+  color: #f304c8;
   font-size: 10.5px;
   letter-spacing: 0.01em;
 }
@@ -131,9 +132,8 @@ button {
 
 /* Header / logo — Tenderbooks */
 .site-header {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 18px 0 10px;
-  border-bottom: 1px solid transparent;
+  background: #fff;
+  padding: 22px 0 14px;
 }
 
 .header-row {
@@ -236,9 +236,9 @@ button {
 
 /* Main — product grid first, like Tenderbooks */
 .main-content {
-  padding-top: 24px;
+  padding-top: 10px;
   padding-bottom: 48px;
-  background: rgba(255, 255, 255, 0.82);
+  background: #fff;
   min-height: 60vh;
 }
 

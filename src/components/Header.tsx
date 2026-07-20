@@ -21,7 +21,7 @@ export function Header() {
       <div className="announce-bar">
         <div className="wrapper announce-inner">
           <p className="announce-message">
-            Hello! Reserve by email — no online checkout :)
+            Hello! We hold books by email reserve :)
           </p>
           <div className="announce-right">
             <a href={`mailto:${store.reserveEmail}`}>Email us</a>
