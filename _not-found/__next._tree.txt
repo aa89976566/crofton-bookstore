@@ -1,2 +1,2 @@
-:HL["/crofton-bookstore/_next/static/chunks/2_os_yoemg-it.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"j4vzEcjlDeT0JrESIU1sR"}
+:HL["/crofton-bookstore/_next/static/chunks/1ykuzo6gb0kxx.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"gjqDl_Cs_Gu_CkMkUaMQg"}
