@@ -1,72 +1,91 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { store } from "@/data/store";
 import { useReserve } from "./ReserveContext";
 
 const nav = [
-  { href: "#shelf", label: "Shelf" },
+  { href: "#shelf", label: "Books" },
   { href: "#about", label: "About" },
   { href: "#visit", label: "Visit" },
-  { href: "#reserve", label: "Reserve" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {
   const { count, open, toggle } = useReserve();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
-      <div className="header-inner">
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-expanded={menuOpen}
-          aria-controls="site-nav"
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          Menu
-        </button>
-
-        <Link href="/" className="brand-mark" onClick={() => setMenuOpen(false)}>
-          <span className="brand-name">{store.name}</span>
-          <span className="brand-place">{store.tagline}</span>
-        </Link>
-
-        <nav id="site-nav" className={`site-nav ${menuOpen ? "is-open" : ""}`}>
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
+    <>
+      <div className="announce-bar">
+        <div className="wrapper announce-inner">
+          <p className="announce-message">
+            Hello! Reserve by email — no online checkout :)
+          </p>
+          <div className="announce-right">
+            <a href={`mailto:${store.reserveEmail}`}>Email us</a>
+            <span className="sep" aria-hidden>
+              ·
+            </span>
+            <button
+              type="button"
+              className="cart-link"
+              onClick={() => toggle()}
+              aria-label={`Open reserve list, ${count} items`}
             >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <button
-          type="button"
-          className="reserve-chip"
-          onClick={() => {
-            setMenuOpen(false);
-            toggle();
-            if (!count) open();
-          }}
-          aria-label={`Open reserve list, ${count} items`}
-        >
-          Reserve <span className="reserve-count">{count}</span>
-        </button>
+              Reserve
+              <span className="cart-count">{count}</span>
+            </button>
+          </div>
+        </div>
       </div>
-    </header>
+
+      <header className="site-header" role="banner">
+        <div className="wrapper header-row">
+          <button
+            type="button"
+            className="menu-btn"
+            aria-expanded={menuOpen}
+            aria-controls="site-nav"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            Menu
+          </button>
+
+          <h1 className="site-logo">
+            <Link href="/" className="logo-link" onClick={() => setMenuOpen(false)}>
+              <span className="logo-word">{store.name}</span>
+              <span className="logo-sub">{store.tagline}</span>
+            </Link>
+          </h1>
+
+          <button
+            type="button"
+            className="mobile-cart"
+            onClick={() => open()}
+            aria-label={`Open reserve list, ${count} items`}
+          >
+            {count}
+          </button>
+
+          <nav
+            id="site-nav"
+            className={`site-nav ${menuOpen ? "is-open" : ""}`}
+          >
+            {nav.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="site-nav__link"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
+    </>
   );
 }
