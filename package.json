@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:gh": "GITHUB_PAGES=true next build",
+    "deploy:gh": "GITHUB_PAGES=true next build && touch out/.nojekyll && npx gh-pages -d out -b gh-pages --dotfiles",
     "start": "next start",
     "lint": "eslint"
   },
