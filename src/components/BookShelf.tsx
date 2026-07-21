@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { books, categories, formatPrice, type Book } from "@/data/books";
+import { books, formatPrice, type Book } from "@/data/books";
 import { useShop } from "./ShopContext";
 
 function CoverArt({ book }: { book: Book }) {
@@ -28,7 +28,7 @@ function CoverArt({ book }: { book: Book }) {
     <div
       className="cover-fallback"
       style={{
-        background: `linear-gradient(160deg, hsl(${hue} 18% 76%), hsl(${(hue + 28) % 360} 14% 58%))`,
+        background: `linear-gradient(160deg, hsl(${hue} 22% 82%), hsl(${(hue + 28) % 360} 18% 68%))`,
       }}
       aria-hidden
     >
@@ -38,14 +38,13 @@ function CoverArt({ book }: { book: Book }) {
 }
 
 export function BookShelf() {
-  const [filter, setFilter] = useState<(typeof categories)[number]>("All");
-  const { openBook, query } = useShop();
+  const { openBook, query, category } = useShop();
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     let list = books;
-    if (filter === "Featured") list = list.filter((b) => b.featured);
-    else if (filter !== "All") list = list.filter((b) => b.category === filter);
+    if (category === "Featured") list = list.filter((b) => b.featured);
+    else if (category !== "All") list = list.filter((b) => b.category === category);
     if (q) {
       list = list.filter(
         (b) =>
@@ -56,23 +55,16 @@ export function BookShelf() {
       );
     }
     return list;
-  }, [filter, query]);
+  }, [category, query]);
 
   return (
-    <section id="shelf" className="collection">
-      <div className="filter-row" role="tablist" aria-label="Filter by category">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            role="tab"
-            aria-selected={filter === cat}
-            className={`filter-btn ${filter === cat ? "is-active" : ""}`}
-            onClick={() => setFilter(cat)}
-          >
-            {cat}
-          </button>
-        ))}
+    <section id="shop" className="shop-section">
+      <div className="section-head">
+        <h2>Shop</h2>
+        <p>
+          Online display only. Click a title for condition notes, then reserve by
+          email.
+        </p>
       </div>
 
       {visible.length === 0 ? (

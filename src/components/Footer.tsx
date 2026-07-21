@@ -3,7 +3,7 @@ import { store } from "@/data/store";
 export function Footer() {
   return (
     <footer id="contact" className="site-footer">
-      <div className="wrapper footer-grid">
+      <div className="footer-grid">
         <div>
           <p className="footer-brand">{store.name}</p>
           <p>
@@ -28,25 +28,22 @@ export function Footer() {
         <div>
           <ul className="footer-links">
             <li>
-              <a href="#shelf">Books</a>
+              <a href="#news">News</a>
             </li>
             <li>
-              <a href="#how">How to reserve</a>
+              <a href="#sell">Sell</a>
             </li>
             <li>
-              <a href="#condition">Condition</a>
+              <a href="#shop">Shop</a>
             </li>
             <li>
-              <a href="#about">About</a>
+              <a href="#how">Reserve</a>
             </li>
             <li>
               <a href="#visit">Visit</a>
             </li>
           </ul>
-          <p className="footer-meta">Online display · Reserve by email</p>
-          <p className="footer-credit">
-            Background texture adapted from D Sharon Pruitt (CC BY 2.0)
-          </p>
+          <p className="footer-meta">Online display. Reserve by email.</p>
         </div>
       </div>
     </footer>

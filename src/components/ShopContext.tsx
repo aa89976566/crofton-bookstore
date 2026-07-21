@@ -8,12 +8,14 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Book } from "@/data/books";
+import { categories, type Book } from "@/data/books";
 
 export type ReserveItem = {
   book: Book;
   qty: number;
 };
+
+export type CategoryFilter = (typeof categories)[number];
 
 type ShopContextValue = {
   items: ReserveItem[];
@@ -30,6 +32,8 @@ type ShopContextValue = {
   closeBook: () => void;
   query: string;
   setQuery: (q: string) => void;
+  category: CategoryFilter;
+  setCategory: (c: CategoryFilter) => void;
 };
 
 const ShopContext = createContext<ShopContextValue | null>(null);
@@ -39,6 +43,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [activeBook, setActiveBook] = useState<Book | null>(null);
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<CategoryFilter>("All");
 
   const add = useCallback((book: Book) => {
     setItems((prev) => {
@@ -79,8 +84,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       closeBook: () => setActiveBook(null),
       query,
       setQuery,
+      category,
+      setCategory,
     }),
-    [items, add, remove, clear, reserveOpen, activeBook, query],
+    [items, add, remove, clear, reserveOpen, activeBook, query, category],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
@@ -90,9 +97,4 @@ export function useShop() {
   const ctx = useContext(ShopContext);
   if (!ctx) throw new Error("useShop must be used within ShopProvider");
   return ctx;
-}
-
-/** @deprecated use useShop */
-export function useReserve() {
-  return useShop();
 }
