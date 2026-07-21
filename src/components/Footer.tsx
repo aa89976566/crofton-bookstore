@@ -31,10 +31,10 @@ export function Footer() {
               <a href="#news">News</a>
             </li>
             <li>
-              <a href="#sell">Sell</a>
+              <a href="#sell">Sell to us</a>
             </li>
             <li>
-              <a href="#shop">Shop</a>
+              <a href="#shop">Shelves</a>
             </li>
             <li>
               <a href="#how">Reserve</a>
@@ -43,7 +43,7 @@ export function Footer() {
               <a href="#visit">Visit</a>
             </li>
           </ul>
-          <p className="footer-meta">Online display. Reserve by email.</p>
+          <p className="footer-meta">Secondhand shelves. Hold by email.</p>
         </div>
       </div>
     </footer>

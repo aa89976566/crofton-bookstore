@@ -60,10 +60,10 @@ export function BookShelf() {
   return (
     <section id="shop" className="shop-section">
       <div className="section-head">
-        <h2>Shop</h2>
+        <h2>The shelves</h2>
         <p>
-          Online display only. Click a title for condition notes, then reserve by
-          email.
+          A slice of the shop online. Every used copy has condition notes. Hold
+          by email, collect in Brockley.
         </p>
       </div>
 
@@ -83,6 +83,11 @@ export function BookShelf() {
               >
                 <span className="grid-link__image">
                   <CoverArt book={book} />
+                  {book.condition !== "New" ? (
+                    <span className="used-stamp">{book.condition}</span>
+                  ) : (
+                    <span className="used-stamp used-stamp--new">New</span>
+                  )}
                 </span>
                 <span className="grid-link__caption">
                   <span className="grid-link__title">

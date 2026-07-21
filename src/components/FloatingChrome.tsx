@@ -8,22 +8,16 @@ import { useShop } from "./ShopContext";
 
 const nav = [
   { href: "#news", label: "News" },
-  { href: "#sell", label: "Sell" },
-  { href: "#shop", label: "Buy" },
-  { href: "#shop", label: "Shop" },
+  { href: "#sell", label: "Sell to us" },
+  { href: "#shop", label: "Shelves" },
   { href: "#how", label: "Reserve" },
-  { action: "baskets" as const, label: "Baskets" },
+  { href: "#visit", label: "Visit" },
+  { action: "baskets" as const, label: "Hold list" },
 ];
 
 export function FloatingChrome() {
-  const {
-    count,
-    openReserve,
-    query,
-    setQuery,
-    category,
-    setCategory,
-  } = useShop();
+  const { count, openReserve, query, setQuery, category, setCategory } =
+    useShop();
   const [catOpen, setCatOpen] = useState(false);
   const catRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +36,8 @@ export function FloatingChrome() {
       </Link>
 
       <div className="floating-chrome">
+        <p className="chrome-ticket">Secondhand · rare · a few new</p>
+
         <nav className="chrome-nav" aria-label="Primary">
           {nav.map((item) =>
             "action" in item && item.action === "baskets" ? (
@@ -55,11 +51,7 @@ export function FloatingChrome() {
                 {count > 0 ? <span className="chrome-badge">{count}</span> : null}
               </button>
             ) : (
-              <a
-                key={item.label}
-                href={"href" in item ? item.href : "#"}
-                className="chrome-nav__link"
-              >
+              <a key={item.label} href={"href" in item ? item.href : "#"} className="chrome-nav__link">
                 {item.label}
               </a>
             ),
@@ -75,7 +67,7 @@ export function FloatingChrome() {
               aria-haspopup="listbox"
               onClick={() => setCatOpen((v) => !v)}
             >
-              {category === "All" ? "Category" : category}
+              {category === "All" ? "Section" : category}
               <span className="cat-chevron" aria-hidden>
                 ▾
               </span>
@@ -111,7 +103,7 @@ export function FloatingChrome() {
             <input
               id="shelf-search"
               type="search"
-              placeholder="Search..."
+              placeholder="Search the shelves..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => {
