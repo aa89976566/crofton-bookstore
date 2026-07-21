@@ -44,7 +44,7 @@ function Cover({ book, large = false }: { book: Book; large?: boolean }) {
 }
 
 export function BookDetail() {
-  const { activeBook, closeBook, add, openBook } = useShop();
+  const { activeBook, closeBook, add, openBook, openHow } = useShop();
 
   if (!activeBook) return null;
 
@@ -140,6 +140,16 @@ export function BookDetail() {
                 onClick={() => add(book)}
               >
                 Add to reserve
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => {
+                  closeBook();
+                  openHow();
+                }}
+              >
+                How to reserve a book
               </button>
               <a className="btn btn-ghost" href={`mailto:${store.reserveEmail}?subject=${encodeURIComponent(`Question about ${book.title}`)}`}>
                 Ask a question

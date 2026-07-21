@@ -1143,46 +1143,27 @@ button {
   color: var(--green);
 }
 
-/* How to reserve CTA modal */
-.how-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(26, 26, 24, 0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-  z-index: 200;
+/* How to reserve popup (native dialog) */
+.how-dialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: calc(100vw - 1.5rem);
+  width: min(28rem, 100%);
+  margin: auto;
 }
 
-.how-backdrop.is-open {
-  opacity: 1;
-  pointer-events: auto;
+.how-dialog::backdrop {
+  background: rgba(26, 26, 24, 0.55);
 }
 
-.how-modal {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  width: min(28rem, calc(100vw - 1.5rem));
-  max-height: min(88vh, 36rem);
-  overflow: auto;
-  transform: translate(-50%, -46%) scale(0.98);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.22s ease,
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 210;
+.how-dialog-card {
   background: var(--paper);
   border: 1px solid var(--line);
   padding: 1.25rem 1.2rem 1.4rem;
   box-shadow: 0 16px 40px rgba(26, 26, 24, 0.22);
-}
-
-.how-modal.is-open {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
+  max-height: min(88vh, 36rem);
+  overflow: auto;
 }
 
 .how-modal-head {
@@ -1201,13 +1182,19 @@ button {
   color: var(--ink);
 }
 
-.how-modal p {
+.how-dialog-card p {
   margin: 0 0 0.85rem;
   color: var(--ink-soft);
 }
 
-.how-modal .sf-steps {
+.how-dialog-card .sf-steps {
   margin-bottom: 1rem;
+}
+
+/* legacy class hooks kept for reduced-motion block */
+.how-backdrop,
+.how-modal {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1219,8 +1206,6 @@ button {
   .reserve-panel,
   .detail-backdrop,
   .reserve-backdrop,
-  .how-backdrop,
-  .how-modal,
   .db-drawer,
   .db-drawer-backdrop,
   .shelf-book,

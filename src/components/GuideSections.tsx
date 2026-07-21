@@ -1,43 +1,50 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { conditionGuide } from "@/data/books";
 import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 export function HowToReserveModal() {
   const { howOpen, closeHow } = useShop();
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (!howOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (howOpen) {
+      if (!dialog.open) dialog.showModal();
+    } else if (dialog.open) {
+      dialog.close();
+    }
   }, [howOpen]);
 
   function pickFromShelves() {
     closeHow();
-    document.getElementById("featured")?.scrollIntoView({ behavior: "smooth" });
+    window.setTimeout(() => {
+      document.getElementById("featured")?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   }
 
   return (
-    <>
-      <div
-        className={`how-backdrop ${howOpen ? "is-open" : ""}`}
-        onClick={closeHow}
-        aria-hidden={!howOpen}
-      />
-      <div
-        className={`how-modal ${howOpen ? "is-open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="how-title"
-        aria-hidden={!howOpen}
-      >
+    <dialog
+      ref={dialogRef}
+      className="how-dialog"
+      aria-labelledby="how-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        closeHow();
+      }}
+      onClose={closeHow}
+      onClick={(e) => {
+        // Click on the backdrop (the dialog itself) closes the popup.
+        if (e.target === dialogRef.current) closeHow();
+      }}
+    >
+      <div className="how-dialog-card">
         <div className="how-modal-head">
-          <h2 id="how-title">How to reserve</h2>
+          <h2 id="how-title">How to reserve a book</h2>
           <button type="button" className="text-btn" onClick={closeHow}>
             Close
           </button>
@@ -60,7 +67,7 @@ export function HowToReserveModal() {
           </a>
         </div>
       </div>
-    </>
+    </dialog>
   );
 }
 
