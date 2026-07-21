@@ -34,9 +34,6 @@ export function Footer() {
             <li>
               <a href="#how">Reserve</a>
             </li>
-            <li>
-              <a href="#sell">Selling</a>
-            </li>
           </ul>
         </div>
         <div>

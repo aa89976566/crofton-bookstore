@@ -4,7 +4,6 @@ import { ConditionGuide, HowToReserve } from "@/components/GuideSections";
 import {
   HomeHero,
   NewsSection,
-  SellSection,
   StoryGuide,
 } from "@/components/HomeSections";
 import { Visit } from "@/components/Visit";
@@ -18,7 +17,6 @@ export default function HomePage() {
       <BookShelf />
       <HowToReserve />
       <NewsSection />
-      <SellSection />
       <About />
       <Visit />
       <ConditionGuide />

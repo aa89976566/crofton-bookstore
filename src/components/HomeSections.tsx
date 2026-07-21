@@ -104,20 +104,3 @@ export function NewsSection() {
     </section>
   );
 }
-
-export function SellSection() {
-  return (
-    <section id="sell" className="db-block db-container">
-      <h2>Selling Books</h2>
-      <p>
-        We buy good used books: literary fiction, poetry, modern classics,
-        curious non fiction, and the odd rare or inscribed copy.
-      </p>
-      <p>
-        Email{" "}
-        <a href={`mailto:${store.reserveEmail}`}>{store.reserveEmail}</a> or
-        call <a href={store.phoneHref}>{store.phone}</a> before large drop offs.
-      </p>
-    </section>
-  );
-}

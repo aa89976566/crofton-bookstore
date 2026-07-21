@@ -11,7 +11,6 @@ const nav = [
   { href: "#about", label: "About" },
   { href: "#visit", label: "Visit" },
   { href: "#how", label: "Reserve" },
-  { href: "#sell", label: "Selling" },
 ];
 
 export function SiteHeader() {
