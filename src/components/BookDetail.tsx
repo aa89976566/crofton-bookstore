@@ -136,15 +136,12 @@ export function BookDetail() {
             <div className="detail-actions">
               <button
                 type="button"
-                className="btn btn-press"
+                className="btn btn-ink"
                 onClick={() => add(book)}
               >
-                Add to hold list
+                Add to reserve
               </button>
-              <a
-                className="btn btn-outline-ink"
-                href={`mailto:${store.reserveEmail}?subject=${encodeURIComponent(`Question about ${book.title}`)}`}
-              >
+              <a className="btn btn-ghost" href={`mailto:${store.reserveEmail}?subject=${encodeURIComponent(`Question about ${book.title}`)}`}>
                 Ask a question
               </a>
             </div>

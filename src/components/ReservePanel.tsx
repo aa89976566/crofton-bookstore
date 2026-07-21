@@ -151,10 +151,10 @@ export function ReservePanel() {
                 placeholder="Collection day, postage, edition preference…"
               />
             </label>
-            <button type="submit" className="btn btn-press" disabled={!items.length}>
-              Email hold request
+            <button type="submit" className="btn btn-ink" disabled={!items.length}>
+              Email reserve request
             </button>
-            <button type="button" className="btn btn-ghost-soft clear-btn" onClick={clear}>
+            <button type="button" className="text-btn clear-btn" onClick={clear}>
               Clear list
             </button>
             {sentHint && (
