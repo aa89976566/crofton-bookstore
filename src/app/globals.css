@@ -1147,11 +1147,11 @@ button {
 .how-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(26, 26, 24, 0.45);
+  background: rgba(26, 26, 24, 0.5);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.22s ease;
-  z-index: 75;
+  z-index: 200;
 }
 
 .how-backdrop.is-open {
@@ -1172,11 +1172,11 @@ button {
   transition:
     opacity 0.22s ease,
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 80;
+  z-index: 210;
   background: var(--paper);
   border: 1px solid var(--line);
   padding: 1.25rem 1.2rem 1.4rem;
-  box-shadow: 0 16px 40px rgba(26, 26, 24, 0.18);
+  box-shadow: 0 16px 40px rgba(26, 26, 24, 0.22);
 }
 
 .how-modal.is-open {

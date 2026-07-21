@@ -33,8 +33,13 @@ export function SiteHeader() {
   }
 
   function onNav(item: (typeof nav)[number]) {
+    if (item.type === "how") {
+      setMenuOpen(false);
+      // Open after the drawer starts closing so the popup is not covered.
+      window.setTimeout(() => openHow(), 50);
+      return;
+    }
     setMenuOpen(false);
-    if (item.type === "how") openHow();
   }
 
   return (
@@ -42,6 +47,10 @@ export function SiteHeader() {
       <div className="db-util">
         <div className="db-container db-util-inner">
           <a href={`mailto:${store.reserveEmail}`}>Email</a>
+          <span className="db-sep">·</span>
+          <button type="button" onClick={() => openHow()}>
+            How to reserve
+          </button>
           <span className="db-sep">·</span>
           <button type="button" onClick={() => openReserve()}>
             Hold list ({count})

@@ -158,7 +158,7 @@ const SHELF_CATEGORIES = [
 ] as const;
 
 export function BookShelf() {
-  const { openBook, query, category, setCategory } = useShop();
+  const { openBook, openHow, query, category, setCategory } = useShop();
 
   const searching = query.trim().length > 0 || category !== "All";
 
@@ -188,6 +188,11 @@ export function BookShelf() {
           your hold list and email us. Online display only. Stock turns quickly
           in the shop.
         </p>
+        <div className="db-cta-row" style={{ marginBottom: "0.85rem" }}>
+          <button type="button" className="btn btn-ink" onClick={openHow}>
+            How to reserve a book
+          </button>
+        </div>
         <div className="sf-browse-bar">
           <label htmlFor="section-select">Section</label>
           <select
