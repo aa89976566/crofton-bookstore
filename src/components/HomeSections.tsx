@@ -7,19 +7,19 @@ import { asset } from "@/lib/paths";
 /** Photos from the Crofton Books Google Maps listing. */
 const slides = [
   {
-    src: asset("/images/shop-hero.jpg"),
+    src: asset("/images/gmaps-01-storefront.jpg"),
     alt: "Crofton Books storefront on Brockley Road with the shop sign and window displays",
   },
   {
-    src: asset("/images/shop-interior.jpg"),
+    src: asset("/images/gmaps-02-doorway.jpg"),
     alt: "Looking into Crofton Books from the pavement, shelves packed wall to wall",
   },
   {
-    src: asset("/images/shop-hero-3.jpg"),
+    src: asset("/images/gmaps-03-shelves.jpg"),
     alt: "Wooden shelves inside Crofton Books filled with secondhand titles",
   },
   {
-    src: asset("/images/shop-hero-2.jpg"),
+    src: asset("/images/gmaps-04-title.jpg"),
     alt: "A title from the Crofton Books shelves, photographed in the shop",
   },
 ];
