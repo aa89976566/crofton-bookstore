@@ -6,15 +6,15 @@ import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 const nav = [
-  { href: "#featured", label: "From the shelves" },
-  { href: "#shop", label: "Browse" },
-  { href: "#about", label: "About" },
-  { href: "#visit", label: "Visit" },
-  { href: "#how", label: "Reserve" },
+  { href: "#featured", label: "From the shelves", type: "link" as const },
+  { href: "#shop", label: "Browse", type: "link" as const },
+  { href: "#about", label: "About", type: "link" as const },
+  { href: "#visit", label: "Visit", type: "link" as const },
+  { href: "how", label: "Reserve", type: "how" as const },
 ];
 
 export function SiteHeader() {
-  const { count, openReserve, query, setQuery } = useShop();
+  const { count, openReserve, openHow, query, setQuery } = useShop();
   const [menuOpen, setMenuOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState(query);
 
@@ -30,6 +30,11 @@ export function SiteHeader() {
     setQuery(localQuery);
     document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
+  }
+
+  function onNav(item: (typeof nav)[number]) {
+    setMenuOpen(false);
+    if (item.type === "how") openHow();
   }
 
   return (
@@ -83,7 +88,13 @@ export function SiteHeader() {
         <ul className="db-container db-nav-list">
           {nav.map((item) => (
             <li key={item.label}>
-              <a href={item.href}>{item.label}</a>
+              {item.type === "how" ? (
+                <button type="button" onClick={() => onNav(item)}>
+                  {item.label}
+                </button>
+              ) : (
+                <a href={item.href}>{item.label}</a>
+              )}
             </li>
           ))}
         </ul>
@@ -108,9 +119,15 @@ export function SiteHeader() {
         <ul>
           {nav.map((item) => (
             <li key={item.label}>
-              <a href={item.href} onClick={() => setMenuOpen(false)}>
-                {item.label}
-              </a>
+              {item.type === "how" ? (
+                <button type="button" onClick={() => onNav(item)}>
+                  {item.label}
+                </button>
+              ) : (
+                <a href={item.href} onClick={() => onNav(item)}>
+                  {item.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>

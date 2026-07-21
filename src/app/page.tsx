@@ -1,6 +1,6 @@
 import { About } from "@/components/About";
 import { BookShelf, FeaturedCarousel } from "@/components/BookShelf";
-import { ConditionGuide, HowToReserve } from "@/components/GuideSections";
+import { ConditionGuide } from "@/components/GuideSections";
 import {
   HomeHero,
   NewsSection,
@@ -15,7 +15,6 @@ export default function HomePage() {
       <StoryGuide />
       <FeaturedCarousel />
       <BookShelf />
-      <HowToReserve />
       <NewsSection />
       <About />
       <Visit />

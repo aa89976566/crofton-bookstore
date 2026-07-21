@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EB_Garamond, Source_Sans_3 } from "next/font/google";
 import { BookDetail } from "@/components/BookDetail";
 import { Footer } from "@/components/Footer";
+import { HowToReserveModal } from "@/components/GuideSections";
 import { ReservePanel } from "@/components/ReservePanel";
 import { ShopProvider } from "@/components/ShopContext";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Footer />
           <BookDetail />
           <ReservePanel />
+          <HowToReserveModal />
         </ShopProvider>
       </body>
     </html>

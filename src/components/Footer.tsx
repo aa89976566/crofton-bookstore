@@ -1,6 +1,11 @@
+"use client";
+
 import { store } from "@/data/store";
+import { useShop } from "./ShopContext";
 
 export function Footer() {
+  const { openHow } = useShop();
+
   return (
     <footer className="sf-footer">
       <div className="sf-container sf-footer-grid">
@@ -32,7 +37,9 @@ export function Footer() {
               <a href="#visit">Visit</a>
             </li>
             <li>
-              <a href="#how">Reserve</a>
+              <button type="button" onClick={openHow}>
+                Reserve
+              </button>
             </li>
           </ul>
         </div>

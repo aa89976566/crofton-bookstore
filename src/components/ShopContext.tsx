@@ -27,6 +27,9 @@ type ShopContextValue = {
   openReserve: () => void;
   closeReserve: () => void;
   toggleReserve: () => void;
+  howOpen: boolean;
+  openHow: () => void;
+  closeHow: () => void;
   activeBook: Book | null;
   openBook: (book: Book) => void;
   closeBook: () => void;
@@ -41,6 +44,7 @@ const ShopContext = createContext<ShopContextValue | null>(null);
 export function ShopProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ReserveItem[]>([]);
   const [reserveOpen, setReserveOpen] = useState(false);
+  const [howOpen, setHowOpen] = useState(false);
   const [activeBook, setActiveBook] = useState<Book | null>(null);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("All");
@@ -73,13 +77,24 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       remove,
       clear,
       reserveOpen,
-      openReserve: () => setReserveOpen(true),
+      openReserve: () => {
+        setHowOpen(false);
+        setReserveOpen(true);
+      },
       closeReserve: () => setReserveOpen(false),
       toggleReserve: () => setReserveOpen((v) => !v),
+      howOpen,
+      openHow: () => {
+        setReserveOpen(false);
+        setActiveBook(null);
+        setHowOpen(true);
+      },
+      closeHow: () => setHowOpen(false),
       activeBook,
       openBook: (book) => {
         setActiveBook(book);
         setReserveOpen(false);
+        setHowOpen(false);
       },
       closeBook: () => setActiveBook(null),
       query,
@@ -87,7 +102,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       category,
       setCategory,
     }),
-    [items, add, remove, clear, reserveOpen, activeBook, query, category],
+    [items, add, remove, clear, reserveOpen, howOpen, activeBook, query, category],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
