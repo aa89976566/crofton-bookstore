@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { books, categories, formatPrice, type Book } from "@/data/books";
 import { useShop } from "./ShopContext";
 
@@ -37,6 +37,93 @@ function CoverArt({ book }: { book: Book }) {
   );
 }
 
+function BookCardButton({
+  book,
+  className,
+  onOpen,
+}: {
+  book: Book;
+  className: string;
+  onOpen: (book: Book) => void;
+}) {
+  return (
+    <button type="button" className={className} onClick={() => onOpen(book)}>
+      <span className="sf-book-image">
+        <CoverArt book={book} />
+      </span>
+      <span className="sf-book-info">
+        <span className="sf-book-author">{book.author}</span>
+        <span className="sf-book-title">{book.title}</span>
+        <span className="sf-book-price">{formatPrice(book.price)}</span>
+        <span className="sf-more">More</span>
+      </span>
+    </button>
+  );
+}
+
+export function FeaturedCarousel() {
+  const { openBook } = useShop();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const featured = useMemo(() => books.filter((b) => b.featured), []);
+
+  function scrollByCard(dir: 1 | -1) {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector(".sf-carousel-card") as HTMLElement | null;
+    const amount = card ? card.offsetWidth + 14 : 200;
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+  }
+
+  return (
+    <section id="featured" className="sf-featured">
+      <div className="sf-featured-head">
+        <h2>Featured Items</h2>
+        <a className="sf-see-all" href="#shop">
+          See all featured items
+          <span className="sf-see-all-icon" aria-hidden>
+            <svg viewBox="0 0 24 24">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <div className="sf-carousel-wrap">
+        <button
+          type="button"
+          className="sf-carousel-nav sf-carousel-prev"
+          aria-label="Previous featured titles"
+          onClick={() => scrollByCard(-1)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden>
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <div className="sf-carousel" ref={trackRef}>
+          {featured.map((book) => (
+            <BookCardButton
+              key={book.id}
+              book={book}
+              className="sf-carousel-card"
+              onOpen={openBook}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          className="sf-carousel-nav sf-carousel-next"
+          aria-label="Next featured titles"
+          onClick={() => scrollByCard(1)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden>
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </section>
+  );
+}
+
 export function BookShelf() {
   const { openBook, query, category, setCategory } = useShop();
 
@@ -58,9 +145,13 @@ export function BookShelf() {
   }, [category, query]);
 
   return (
-    <section id="shop" className="sf-featured">
+    <section id="shop" className="sf-catalogue">
       <div className="sf-container">
-        <h2 className="sf-section-title">Featured from the shelves</h2>
+        <h2 className="sf-section-title">Browse the shelves</h2>
+        <p className="sf-note" style={{ marginBottom: "1rem" }}>
+          Online display only. Open a title for condition notes, then add it to
+          your hold list and email us. Stock turns quickly in the shop.
+        </p>
 
         <div className="sf-browse-bar">
           <label htmlFor="section-select">Browse</label>
@@ -82,22 +173,12 @@ export function BookShelf() {
         ) : (
           <ul className="sf-book-grid">
             {visible.map((book) => (
-              <li key={book.id} className="sf-book">
-                <button
-                  type="button"
+              <li key={book.id}>
+                <BookCardButton
+                  book={book}
                   className="sf-book-card"
-                  onClick={() => openBook(book)}
-                >
-                  <span className="sf-book-image">
-                    <CoverArt book={book} />
-                  </span>
-                  <span className="sf-book-info">
-                    <span className="sf-book-author">{book.author}</span>
-                    <span className="sf-book-title">{book.title}</span>
-                    <span className="sf-book-price">{formatPrice(book.price)}</span>
-                    <span className="sf-more">More</span>
-                  </span>
-                </button>
+                  onOpen={openBook}
+                />
               </li>
             ))}
           </ul>

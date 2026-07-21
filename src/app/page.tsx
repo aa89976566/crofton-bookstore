@@ -1,20 +1,27 @@
 import { About } from "@/components/About";
-import { BookShelf } from "@/components/BookShelf";
+import { BookShelf, FeaturedCarousel } from "@/components/BookShelf";
 import { ConditionGuide, HowToReserve } from "@/components/GuideSections";
-import { HomeHero, NewsSection, SellSection } from "@/components/HomeSections";
+import {
+  HomeHero,
+  NewsSection,
+  SellSection,
+  StoryGuide,
+} from "@/components/HomeSections";
 import { Visit } from "@/components/Visit";
 
 export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <StoryGuide />
+      <FeaturedCarousel />
       <BookShelf />
+      <HowToReserve />
       <NewsSection />
       <SellSection />
-      <HowToReserve />
-      <ConditionGuide />
       <About />
       <Visit />
+      <ConditionGuide />
     </>
   );
 }

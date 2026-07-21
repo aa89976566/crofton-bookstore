@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:gh": "GITHUB_PAGES=true next build",
-    "deploy:gh": "GITHUB_PAGES=true next build && touch out/.nojekyll && npx gh-pages -d out -b gh-pages --dotfiles",
+    "build:gh": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/crofton-bookstore next build",
+    "deploy:gh": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/crofton-bookstore next build && touch out/.nojekyll && npx gh-pages -d out -b gh-pages --dotfiles",
     "start": "next start",
     "lint": "eslint"
   },

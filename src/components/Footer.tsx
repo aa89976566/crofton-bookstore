@@ -20,7 +20,19 @@ export function Footer() {
         <div>
           <ul className="sf-footer-links">
             <li>
+              <a href="#story">Our Story</a>
+            </li>
+            <li>
+              <a href="#featured">Featured Items</a>
+            </li>
+            <li>
               <a href="#shop">Browse</a>
+            </li>
+            <li>
+              <a href="#about">About</a>
+            </li>
+            <li>
+              <a href="#visit">Visit Us</a>
             </li>
             <li>
               <a href="#sell">Selling Books</a>
@@ -31,15 +43,10 @@ export function Footer() {
             <li>
               <a href="#condition">Condition</a>
             </li>
-            <li>
-              <a href="#visit">Contact</a>
-            </li>
           </ul>
         </div>
         <div>
-          <p>
-            Online display only. Hold by email. No account required.
-          </p>
+          <p>Online display only. Hold by email. No account required.</p>
           <p>
             <a href={store.instagram} target="_blank" rel="noreferrer">
               {store.instagramHandle}

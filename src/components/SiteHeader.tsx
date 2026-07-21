@@ -1,24 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 const nav = [
-  { href: "#shop", label: "Home" },
+  { href: "#story", label: "Our Story" },
+  { href: "#featured", label: "Featured Items" },
+  { href: "#shop", label: "Browse All" },
+  { href: "#how", label: "How to Reserve" },
   { href: "#about", label: "About" },
-  { href: "#shop", label: "New Arrivals" },
-  { href: "#shop", label: "Browse" },
-  { href: "#how", label: "Reserve" },
+  { href: "#visit", label: "Visit Us" },
   { href: "#sell", label: "Selling Books" },
-  { href: "#visit", label: "Contact" },
+  { href: "#condition", label: "Condition Guide" },
 ];
+
+function IconMenu() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="M16.5 16.5L21 21" />
+    </svg>
+  );
+}
 
 export function SiteHeader() {
   const { count, openReserve, query, setQuery } = useShop();
   const [menuOpen, setMenuOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState(query);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   function onSearch(e: FormEvent) {
     e.preventDefault();
@@ -30,65 +55,86 @@ export function SiteHeader() {
   return (
     <header className="sf-header">
       <div className="sf-util">
-        <div className="sf-container sf-util-inner">
+        <div className="sf-util-inner">
           <div className="sf-util-left">
             <a href={`mailto:${store.reserveEmail}`}>Email us</a>
             <span className="sf-sep">|</span>
             <button type="button" onClick={() => openReserve()}>
-              Hold list <span className="sf-cart-count">({count})</span>
+              Hold list <span className="sf-cart-count">({count} items)</span>
             </button>
           </div>
-          <form className="sf-search" onSubmit={onSearch}>
-            <label className="sr-only" htmlFor="shelf-search">
-              Search
-            </label>
-            <input
-              id="shelf-search"
-              type="search"
-              placeholder="Search"
-              value={localQuery}
-              onChange={(e) => setLocalQuery(e.target.value)}
-            />
-            <button type="submit" className="sf-btn-search">
-              Search
-            </button>
-          </form>
         </div>
       </div>
 
       <div className="sf-masthead">
-        <div className="sf-container">
-          <Link href="/" className="sf-logo">
-            <span className="sf-logo-main">{store.name}</span>
-            <span className="sf-logo-sub">Secondhand books in Brockley</span>
-          </Link>
-        </div>
+        <Link href="/" className="sf-logo">
+          <span className="sf-logo-main">{store.name}</span>
+          <span className="sf-logo-sub">Secondhand books in Brockley</span>
+        </Link>
       </div>
 
-      <nav className="sf-navbar" aria-label="Primary">
-        <div className="sf-container sf-navbar-inner">
+      <div className="sf-toolbar">
+        <button
+          type="button"
+          className="sf-icon-btn"
+          aria-expanded={menuOpen}
+          aria-controls="site-drawer"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <IconMenu />
+        </button>
+        <form className="sf-search" onSubmit={onSearch}>
+          <label className="sr-only" htmlFor="shelf-search">
+            Search author, title, or keyword
+          </label>
+          <input
+            id="shelf-search"
+            type="search"
+            placeholder="author, title, or keyword"
+            value={localQuery}
+            onChange={(e) => setLocalQuery(e.target.value)}
+          />
+          <button type="submit" className="sf-btn-search" aria-label="Search">
+            <IconSearch />
+          </button>
+        </form>
+      </div>
+
+      <div
+        className={`sf-drawer-backdrop ${menuOpen ? "is-open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden={!menuOpen}
+      />
+      <aside
+        id="site-drawer"
+        className={`sf-drawer ${menuOpen ? "is-open" : ""}`}
+        aria-hidden={!menuOpen}
+      >
+        <div className="sf-drawer-head">
+          <strong>Menu</strong>
           <button
             type="button"
-            className="sf-menu-toggle"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
+            className="sf-drawer-close"
+            onClick={() => setMenuOpen(false)}
           >
-            Menu
+            Close
           </button>
-          <ul className={`sf-nav ${menuOpen ? "is-open" : ""}`}>
-            {nav.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
-      </nav>
+        <ul className="sf-drawer-nav">
+          {nav.map((item) => (
+            <li key={item.label}>
+              <a href={item.href} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="sf-drawer-hint">
+          Start with Our Story or Visit Us if you are new. Browse Featured Items
+          when you know what you are looking for.
+        </p>
+      </aside>
     </header>
   );
 }
