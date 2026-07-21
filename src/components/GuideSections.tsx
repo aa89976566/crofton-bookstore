@@ -6,8 +6,17 @@ import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 export function HowToReserveModal() {
-  const { howOpen, closeHow } = useShop();
+  const { howOpen, openHow, closeHow } = useShop();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const openedOnEntry = useRef(false);
+
+  // Show the popup automatically when the visitor enters the site.
+  useEffect(() => {
+    if (openedOnEntry.current) return;
+    openedOnEntry.current = true;
+    const id = window.setTimeout(() => openHow(), 400);
+    return () => window.clearTimeout(id);
+  }, [openHow]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -38,7 +47,6 @@ export function HowToReserveModal() {
       }}
       onClose={closeHow}
       onClick={(e) => {
-        // Click on the backdrop (the dialog itself) closes the popup.
         if (e.target === dialogRef.current) closeHow();
       }}
     >

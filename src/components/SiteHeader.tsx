@@ -6,15 +6,14 @@ import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 const nav = [
-  { href: "#featured", label: "From the shelves", type: "link" as const },
-  { href: "#shop", label: "Browse", type: "link" as const },
-  { href: "#about", label: "About", type: "link" as const },
-  { href: "#visit", label: "Visit", type: "link" as const },
-  { href: "how", label: "Reserve", type: "how" as const },
+  { href: "#featured", label: "From the shelves" },
+  { href: "#shop", label: "Browse" },
+  { href: "#about", label: "About" },
+  { href: "#visit", label: "Visit" },
 ];
 
 export function SiteHeader() {
-  const { count, openReserve, openHow, query, setQuery } = useShop();
+  const { count, openReserve, query, setQuery } = useShop();
   const [menuOpen, setMenuOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState(query);
 
@@ -32,25 +31,11 @@ export function SiteHeader() {
     setMenuOpen(false);
   }
 
-  function onNav(item: (typeof nav)[number]) {
-    if (item.type === "how") {
-      setMenuOpen(false);
-      // Open after the drawer starts closing so the popup is not covered.
-      window.setTimeout(() => openHow(), 50);
-      return;
-    }
-    setMenuOpen(false);
-  }
-
   return (
     <header className="db-header">
       <div className="db-util">
         <div className="db-container db-util-inner">
           <a href={`mailto:${store.reserveEmail}`}>Email</a>
-          <span className="db-sep">·</span>
-          <button type="button" onClick={() => openHow()}>
-            How to reserve
-          </button>
           <span className="db-sep">·</span>
           <button type="button" onClick={() => openReserve()}>
             Hold list ({count})
@@ -97,13 +82,7 @@ export function SiteHeader() {
         <ul className="db-container db-nav-list">
           {nav.map((item) => (
             <li key={item.label}>
-              {item.type === "how" ? (
-                <button type="button" onClick={() => onNav(item)}>
-                  {item.label}
-                </button>
-              ) : (
-                <a href={item.href}>{item.label}</a>
-              )}
+              <a href={item.href}>{item.label}</a>
             </li>
           ))}
         </ul>
@@ -128,15 +107,9 @@ export function SiteHeader() {
         <ul>
           {nav.map((item) => (
             <li key={item.label}>
-              {item.type === "how" ? (
-                <button type="button" onClick={() => onNav(item)}>
-                  {item.label}
-                </button>
-              ) : (
-                <a href={item.href} onClick={() => onNav(item)}>
-                  {item.label}
-                </a>
-              )}
+              <a href={item.href} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </a>
             </li>
           ))}
         </ul>

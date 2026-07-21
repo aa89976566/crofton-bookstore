@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { store } from "@/data/store";
 import { asset } from "@/lib/paths";
-import { useShop } from "./ShopContext";
 
 const slides = [
   {
@@ -73,8 +72,6 @@ export function HomeHero() {
 }
 
 export function StoryGuide() {
-  const { openHow } = useShop();
-
   return (
     <section id="story" className="db-story db-container">
       <h2>Our Story</h2>
@@ -89,11 +86,11 @@ export function StoryGuide() {
         <a href="#visit">visit us</a> for hours and trains.
       </p>
       <div className="db-cta-row">
-        <button type="button" className="btn btn-ink" onClick={openHow}>
-          How to reserve a book
-        </button>
-        <a className="btn btn-ghost" href="#featured">
+        <a className="btn btn-ink" href="#featured">
           Browse the shelves
+        </a>
+        <a className="btn btn-ghost" href="#visit">
+          Visit us
         </a>
       </div>
     </section>
