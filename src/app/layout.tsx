@@ -1,32 +1,22 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
-import { Fraunces, Literata } from "next/font/google";
-import { BackgroundArt } from "@/components/BackgroundArt";
+import { Alegreya, Source_Sans_3 } from "next/font/google";
 import { BookDetail } from "@/components/BookDetail";
-import { FloatingChrome } from "@/components/FloatingChrome";
 import { Footer } from "@/components/Footer";
 import { ReservePanel } from "@/components/ReservePanel";
 import { ShopProvider } from "@/components/ShopContext";
+import { SiteHeader } from "@/components/SiteHeader";
 import { store } from "@/data/store";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const alegreya = Alegreya({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["SOFT", "WONK"],
+  variable: "--font-alegreya",
 });
 
-const literata = Literata({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-literata",
+  variable: "--font-source",
 });
-
-const basePath = process.env.GITHUB_PAGES === "true" ? "/crofton-bookstore" : "";
-
-const textureStyles = {
-  ["--texture-paper"]: `url(${basePath}/textures/old-paper.jpg)`,
-  ["--texture-antique"]: `url(${basePath}/textures/antique-pages.jpg)`,
-} as CSSProperties;
 
 export const metadata: Metadata = {
   title: `${store.name} ${store.tagline}`,
@@ -45,12 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`h-full ${fraunces.variable} ${literata.variable}`}>
-      <body className="min-h-full antialiased" style={textureStyles}>
+    <html lang="en-GB" className={`h-full ${alegreya.variable} ${sourceSans.variable}`}>
+      <body className="min-h-full antialiased">
         <ShopProvider>
-          <BackgroundArt />
-          <FloatingChrome />
-          <main className="site-main">{children}</main>
+          <SiteHeader />
+          <main>{children}</main>
           <Footer />
           <BookDetail />
           <ReservePanel />

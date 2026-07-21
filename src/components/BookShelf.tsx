@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { books, formatPrice, type Book } from "@/data/books";
+import { books, categories, formatPrice, type Book } from "@/data/books";
 import { useShop } from "./ShopContext";
 
 function CoverArt({ book }: { book: Book }) {
@@ -28,7 +28,7 @@ function CoverArt({ book }: { book: Book }) {
     <div
       className="cover-fallback"
       style={{
-        background: `linear-gradient(160deg, hsl(${hue} 22% 82%), hsl(${(hue + 28) % 360} 18% 68%))`,
+        background: `linear-gradient(165deg, hsl(${hue} 18% 78%), hsl(${(hue + 25) % 360} 14% 62%))`,
       }}
       aria-hidden
     >
@@ -38,7 +38,7 @@ function CoverArt({ book }: { book: Book }) {
 }
 
 export function BookShelf() {
-  const { openBook, query, category } = useShop();
+  const { openBook, query, category, setCategory } = useShop();
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -58,53 +58,51 @@ export function BookShelf() {
   }, [category, query]);
 
   return (
-    <section id="shop" className="shop-section">
-      <div className="section-head">
-        <h2>The shelves</h2>
-        <p>
-          A slice of the shop online. Every used copy has condition notes. Hold
-          by email, collect in Brockley.
-        </p>
-      </div>
+    <section id="shop" className="sf-featured">
+      <div className="sf-container">
+        <h2 className="sf-section-title">Featured from the shelves</h2>
 
-      {visible.length === 0 ? (
-        <p className="empty-shelf">
-          No titles match. Try another word, or email us a wish list.
-        </p>
-      ) : (
-        <ul className="product-grid">
-          {visible.map((book) => (
-            <li key={book.id} className="product-cell">
-              <button
-                type="button"
-                className="grid-link"
-                onClick={() => openBook(book)}
-                aria-label={`${book.title} by ${book.author}, ${formatPrice(book.price)}. Open details.`}
-              >
-                <span className="grid-link__image">
-                  <CoverArt book={book} />
-                  {book.condition !== "New" ? (
-                    <span className="used-stamp">{book.condition}</span>
-                  ) : (
-                    <span className="used-stamp used-stamp--new">New</span>
-                  )}
-                </span>
-                <span className="grid-link__caption">
-                  <span className="grid-link__title">
-                    {book.author !== "Various"
-                      ? `${book.title}. ${book.author}`
-                      : `${book.title}.`}
+        <div className="sf-browse-bar">
+          <label htmlFor="section-select">Browse</label>
+          <select
+            id="section-select"
+            value={category}
+            onChange={(e) => setCategory(e.target.value as typeof category)}
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {visible.length === 0 ? (
+          <p className="sf-empty">No titles match. Try another search.</p>
+        ) : (
+          <ul className="sf-book-grid">
+            {visible.map((book) => (
+              <li key={book.id} className="sf-book">
+                <button
+                  type="button"
+                  className="sf-book-card"
+                  onClick={() => openBook(book)}
+                >
+                  <span className="sf-book-image">
+                    <CoverArt book={book} />
                   </span>
-                  <span className="grid-link__meta">
-                    {formatPrice(book.price)}
-                    <span className="grid-link__cond"> · {book.condition}</span>
+                  <span className="sf-book-info">
+                    <span className="sf-book-author">{book.author}</span>
+                    <span className="sf-book-title">{book.title}</span>
+                    <span className="sf-book-price">{formatPrice(book.price)}</span>
+                    <span className="sf-more">More</span>
                   </span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </section>
   );
 }

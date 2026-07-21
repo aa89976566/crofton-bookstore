@@ -7,19 +7,14 @@ import { Visit } from "@/components/Visit";
 export default function HomePage() {
   return (
     <>
-      <div className="hero-stage">
-        <HomeHero />
-      </div>
-
-      <div className="content-sheet">
-        <NewsSection />
-        <SellSection />
-        <BookShelf />
-        <HowToReserve />
-        <ConditionGuide />
-        <About />
-        <Visit />
-      </div>
+      <HomeHero />
+      <BookShelf />
+      <NewsSection />
+      <SellSection />
+      <HowToReserve />
+      <ConditionGuide />
+      <About />
+      <Visit />
     </>
   );
 }

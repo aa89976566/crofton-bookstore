@@ -2,39 +2,43 @@ import { store } from "@/data/store";
 
 export function Visit() {
   return (
-    <section id="visit" className="info-block">
-      <div className="wrapper narrow">
-        <h2>Visit</h2>
-        <p>
-          {store.address.line1}
-          <br />
-          {store.address.line2}
-        </p>
-        <p>
-          <a href={store.mapsUrl} target="_blank" rel="noreferrer">
-            Open in Google Maps
-          </a>
-        </p>
-
-        <h3>Hours</h3>
-        <ul className="hours-list">
-          {store.hours.map((row) => (
-            <li key={row.day}>
-              <span>{row.day}</span>
-              <span>{row.time}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="note">{store.hoursNote}</p>
-
-        <h3>Trains</h3>
-        <ul className="plain-list">
-          {store.transport.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-        <p>{store.accessibility}</p>
-      </div>
+    <section id="visit" className="sf-block sf-container">
+      <h2>Contact</h2>
+      <p>
+        <strong>{store.name}</strong>
+        <br />
+        {store.address.line1}
+        <br />
+        {store.address.line2}
+      </p>
+      <p>
+        Phone: <a href={store.phoneHref}>{store.phone}</a>
+        <br />
+        Email:{" "}
+        <a href={`mailto:${store.reserveEmail}`}>{store.reserveEmail}</a>
+      </p>
+      <p>
+        <a href={store.mapsUrl} target="_blank" rel="noreferrer">
+          Open in Google Maps
+        </a>
+      </p>
+      <h3>Opening hours</h3>
+      <ul className="sf-hours">
+        {store.hours.map((row) => (
+          <li key={row.day}>
+            <span>{row.day}</span>
+            <span>{row.time}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="sf-note">{store.hoursNote}</p>
+      <h3>Trains</h3>
+      <ul className="sf-plain">
+        {store.transport.map((line) => (
+          <li key={line}>{line}</li>
+        ))}
+      </ul>
+      <p>{store.accessibility}</p>
     </section>
   );
 }
