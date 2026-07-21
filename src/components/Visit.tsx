@@ -3,7 +3,7 @@ import { asset } from "@/lib/paths";
 
 export function Visit() {
   return (
-    <section id="visit" className="sf-block">
+    <section id="visit" className="db-block db-container">
       <h2>Visit Us</h2>
       <p>
         Come in person when you can. The online shelf is only a slice of what is
@@ -15,12 +15,6 @@ export function Visit() {
           src={asset("/images/visit-storefront.jpg")}
           alt="Crofton Books storefront on Brockley Road"
         />
-        <figcaption>
-          Photo from{" "}
-          <a href={store.mapsUrl} target="_blank" rel="noreferrer">
-            Google Maps
-          </a>
-        </figcaption>
       </figure>
       <p>
         <strong style={{ color: "var(--ink)" }}>{store.name}</strong>
@@ -35,7 +29,7 @@ export function Visit() {
         Email:{" "}
         <a href={`mailto:${store.reserveEmail}`}>{store.reserveEmail}</a>
       </p>
-      <div className="sf-cta-row">
+      <div className="db-cta-row">
         <a
           className="btn btn-ink"
           href={store.mapsUrl}
@@ -47,9 +41,6 @@ export function Visit() {
         <a className="btn btn-ghost" href={`mailto:${store.reserveEmail}`}>
           Email before you visit
         </a>
-        <a className="btn btn-ghost" href={store.instagram} target="_blank" rel="noreferrer">
-          Check hours on Instagram
-        </a>
       </div>
       <h3>Opening hours</h3>
       <ul className="sf-hours">
@@ -60,7 +51,7 @@ export function Visit() {
           </li>
         ))}
       </ul>
-      <p className="sf-note">{store.hoursNote}</p>
+      <p className="db-note">{store.hoursNote}</p>
       <h3>Trains</h3>
       <ul className="sf-plain">
         {store.transport.map((line) => (

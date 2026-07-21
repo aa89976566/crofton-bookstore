@@ -20,10 +20,7 @@ export function Footer() {
         <div>
           <ul className="sf-footer-links">
             <li>
-              <a href="#story">Our Story</a>
-            </li>
-            <li>
-              <a href="#featured">Featured Items</a>
+              <a href="#featured">From the shelves</a>
             </li>
             <li>
               <a href="#shop">Browse</a>
@@ -32,16 +29,13 @@ export function Footer() {
               <a href="#about">About</a>
             </li>
             <li>
-              <a href="#visit">Visit Us</a>
-            </li>
-            <li>
-              <a href="#sell">Selling Books</a>
+              <a href="#visit">Visit</a>
             </li>
             <li>
               <a href="#how">Reserve</a>
             </li>
             <li>
-              <a href="#condition">Condition</a>
+              <a href="#sell">Selling</a>
             </li>
           </ul>
         </div>

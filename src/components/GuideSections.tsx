@@ -3,20 +3,20 @@ import { store } from "@/data/store";
 
 export function HowToReserve() {
   return (
-    <section id="how" className="sf-block">
+    <section id="how" className="db-block db-container">
       <h2>How to reserve</h2>
       <p>
-        There is no checkout and no account. You browse, hold, and email. We
-        confirm what we can keep aside for you.
+        There is no checkout and no account. Browse the shelves, hold a title,
+        then email us. We confirm what we can keep aside.
       </p>
       <ol className="sf-steps">
         {store.reserveHow.map((step) => (
           <li key={step}>{step}</li>
         ))}
       </ol>
-      <div className="sf-cta-row">
+      <div className="db-cta-row">
         <a className="btn btn-ink" href="#featured">
-          Start with featured items
+          Pick from the shelves
         </a>
         <a className="btn btn-ghost" href={`mailto:${store.reserveEmail}`}>
           Email {store.reserveEmail}
@@ -28,7 +28,7 @@ export function HowToReserve() {
 
 export function ConditionGuide() {
   return (
-    <section id="condition" className="sf-block">
+    <section id="condition" className="db-block db-container">
       <h2>Condition guide</h2>
       <p>
         Secondhand books are described honestly. Grades follow common

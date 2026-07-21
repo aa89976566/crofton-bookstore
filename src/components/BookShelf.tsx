@@ -28,7 +28,7 @@ function CoverArt({ book }: { book: Book }) {
     <div
       className="cover-fallback"
       style={{
-        background: `linear-gradient(165deg, hsl(${hue} 18% 78%), hsl(${(hue + 25) % 360} 14% 62%))`,
+        background: `linear-gradient(165deg, hsl(${hue} 22% 34%), hsl(${(hue + 28) % 360} 18% 22%))`,
       }}
       aria-hidden
     >
@@ -37,95 +37,130 @@ function CoverArt({ book }: { book: Book }) {
   );
 }
 
-function BookCardButton({
+function ShelfBook({
   book,
-  className,
   onOpen,
+  tilt,
 }: {
   book: Book;
-  className: string;
   onOpen: (book: Book) => void;
+  tilt: number;
 }) {
   return (
-    <button type="button" className={className} onClick={() => onOpen(book)}>
-      <span className="sf-book-image">
+    <button
+      type="button"
+      className="shelf-book"
+      style={{ ["--tilt" as string]: `${tilt}deg` }}
+      onClick={() => onOpen(book)}
+    >
+      <span className="shelf-book-cover">
         <CoverArt book={book} />
       </span>
-      <span className="sf-book-info">
-        <span className="sf-book-author">{book.author}</span>
-        <span className="sf-book-title">{book.title}</span>
-        <span className="sf-book-price">{formatPrice(book.price)}</span>
-        <span className="sf-more">More</span>
+      <span className="shelf-book-meta">
+        <span className="shelf-book-title">{book.title}</span>
+        <span className="shelf-book-author">{book.author}</span>
+        <span className="shelf-book-price">{formatPrice(book.price)}</span>
       </span>
     </button>
   );
 }
 
-export function FeaturedCarousel() {
+function ShelfRow({
+  id,
+  title,
+  list,
+  seeMoreHref,
+  seeMoreLabel,
+}: {
+  id?: string;
+  title: string;
+  list: Book[];
+  seeMoreHref?: string;
+  seeMoreLabel?: string;
+}) {
   const { openBook } = useShop();
   const trackRef = useRef<HTMLDivElement>(null);
-  const featured = useMemo(() => books.filter((b) => b.featured), []);
 
-  function scrollByCard(dir: 1 | -1) {
+  if (list.length === 0) return null;
+
+  function scroll(dir: 1 | -1) {
     const el = trackRef.current;
     if (!el) return;
-    const card = el.querySelector(".sf-carousel-card") as HTMLElement | null;
-    const amount = card ? card.offsetWidth + 14 : 200;
-    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+    el.scrollBy({ left: dir * 220, behavior: "smooth" });
   }
 
   return (
-    <section id="featured" className="sf-featured">
-      <div className="sf-featured-head">
-        <h2>Featured Items</h2>
-        <a className="sf-see-all" href="#shop">
-          See all featured items
-          <span className="sf-see-all-icon" aria-hidden>
-            <svg viewBox="0 0 24 24">
-              <path d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </a>
+    <section id={id} className="shelf-section">
+      <div className="db-container shelf-head">
+        <h2>{title}</h2>
+        {seeMoreHref ? (
+          <a className="shelf-see-more" href={seeMoreHref}>
+            {seeMoreLabel ?? "See more books…"}
+          </a>
+        ) : null}
       </div>
 
-      <div className="sf-carousel-wrap">
+      <div className="shelf-stage">
         <button
           type="button"
-          className="sf-carousel-nav sf-carousel-prev"
-          aria-label="Previous featured titles"
-          onClick={() => scrollByCard(-1)}
+          className="shelf-nav shelf-nav-prev"
+          aria-label={`Previous ${title}`}
+          onClick={() => scroll(-1)}
         >
-          <svg viewBox="0 0 24 24" aria-hidden>
-            <path d="M15 5l-7 7 7 7" />
-          </svg>
+          ‹
         </button>
-        <div className="sf-carousel" ref={trackRef}>
-          {featured.map((book) => (
-            <BookCardButton
+        <div className="shelf-track" ref={trackRef}>
+          {list.map((book, i) => (
+            <ShelfBook
               key={book.id}
               book={book}
-              className="sf-carousel-card"
               onOpen={openBook}
+              tilt={((i * 7) % 5) - 2}
             />
           ))}
         </div>
         <button
           type="button"
-          className="sf-carousel-nav sf-carousel-next"
-          aria-label="Next featured titles"
-          onClick={() => scrollByCard(1)}
+          className="shelf-nav shelf-nav-next"
+          aria-label={`Next ${title}`}
+          onClick={() => scroll(1)}
         >
-          <svg viewBox="0 0 24 24" aria-hidden>
-            <path d="M9 5l7 7-7 7" />
-          </svg>
+          ›
         </button>
+        <div className="shelf-wood" aria-hidden>
+          <div className="shelf-wood-edge" />
+        </div>
       </div>
     </section>
   );
 }
 
+export function FeaturedCarousel() {
+  const featured = useMemo(() => books.filter((b) => b.featured), []);
+  return (
+    <ShelfRow
+      id="featured"
+      title="From the shelves"
+      list={featured}
+      seeMoreHref="#shop"
+      seeMoreLabel="See more books…"
+    />
+  );
+}
+
+const SHELF_CATEGORIES = [
+  "Fiction",
+  "Poetry",
+  "Vintage",
+  "Occult",
+  "Sci-Fi",
+  "Non-fiction",
+] as const;
+
 export function BookShelf() {
   const { openBook, query, category, setCategory } = useShop();
+
+  const searching = query.trim().length > 0 || category !== "All";
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -145,16 +180,16 @@ export function BookShelf() {
   }, [category, query]);
 
   return (
-    <section id="shop" className="sf-catalogue">
-      <div className="sf-container">
-        <h2 className="sf-section-title">Browse the shelves</h2>
-        <p className="sf-note" style={{ marginBottom: "1rem" }}>
-          Online display only. Open a title for condition notes, then add it to
-          your hold list and email us. Stock turns quickly in the shop.
+    <div id="shop">
+      <div className="db-container shelf-browse">
+        <h2 className="db-section-title">Browse the bookcase</h2>
+        <p className="db-note">
+          Pull a title from the shelf to read condition notes, then add it to
+          your hold list and email us. Online display only. Stock turns quickly
+          in the shop.
         </p>
-
         <div className="sf-browse-bar">
-          <label htmlFor="section-select">Browse</label>
+          <label htmlFor="section-select">Section</label>
           <select
             id="section-select"
             value={category}
@@ -167,23 +202,48 @@ export function BookShelf() {
             ))}
           </select>
         </div>
-
-        {visible.length === 0 ? (
-          <p className="sf-empty">No titles match. Try another search.</p>
-        ) : (
-          <ul className="sf-book-grid">
-            {visible.map((book) => (
-              <li key={book.id}>
-                <BookCardButton
-                  book={book}
-                  className="sf-book-card"
-                  onOpen={openBook}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
-    </section>
+
+      {searching ? (
+        <section className="shelf-section">
+          <div className="db-container shelf-head">
+            <h2>
+              {visible.length === 0
+                ? "No titles match"
+                : `Results (${visible.length})`}
+            </h2>
+          </div>
+          {visible.length > 0 ? (
+            <div className="shelf-stage">
+              <div className="shelf-track shelf-track-wrap">
+                {visible.map((book, i) => (
+                  <ShelfBook
+                    key={book.id}
+                    book={book}
+                    onOpen={openBook}
+                    tilt={((i * 7) % 5) - 2}
+                  />
+                ))}
+              </div>
+              <div className="shelf-wood" aria-hidden>
+                <div className="shelf-wood-edge" />
+              </div>
+            </div>
+          ) : (
+            <p className="db-container db-note">Try another search or section.</p>
+          )}
+        </section>
+      ) : (
+        SHELF_CATEGORIES.map((cat) => (
+          <ShelfRow
+            key={cat}
+            title={cat}
+            list={books.filter((b) => b.category === cat)}
+            seeMoreHref="#shop"
+            seeMoreLabel="See more books…"
+          />
+        ))
+      )}
+    </div>
   );
 }

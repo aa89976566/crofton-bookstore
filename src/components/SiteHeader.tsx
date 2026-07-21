@@ -6,32 +6,13 @@ import { store } from "@/data/store";
 import { useShop } from "./ShopContext";
 
 const nav = [
-  { href: "#story", label: "Our Story" },
-  { href: "#featured", label: "Featured Items" },
-  { href: "#shop", label: "Browse All" },
-  { href: "#how", label: "How to Reserve" },
+  { href: "#featured", label: "From the shelves" },
+  { href: "#shop", label: "Browse" },
   { href: "#about", label: "About" },
-  { href: "#visit", label: "Visit Us" },
-  { href: "#sell", label: "Selling Books" },
-  { href: "#condition", label: "Condition Guide" },
+  { href: "#visit", label: "Visit" },
+  { href: "#how", label: "Reserve" },
+  { href: "#sell", label: "Selling" },
 ];
-
-function IconMenu() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden>
-      <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  );
-}
-
-function IconSearch() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden>
-      <circle cx="11" cy="11" r="6.5" />
-      <path d="M16.5 16.5L21 21" />
-    </svg>
-  );
-}
 
 export function SiteHeader() {
   const { count, openReserve, query, setQuery } = useShop();
@@ -53,75 +34,79 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sf-header">
-      <div className="sf-util">
-        <div className="sf-util-inner">
-          <div className="sf-util-left">
-            <a href={`mailto:${store.reserveEmail}`}>Email us</a>
-            <span className="sf-sep">|</span>
-            <button type="button" onClick={() => openReserve()}>
-              Hold list <span className="sf-cart-count">({count} items)</span>
-            </button>
-          </div>
+    <header className="db-header">
+      <div className="db-util">
+        <div className="db-container db-util-inner">
+          <a href={`mailto:${store.reserveEmail}`}>Email</a>
+          <span className="db-sep">·</span>
+          <button type="button" onClick={() => openReserve()}>
+            Hold list ({count})
+          </button>
+          <span className="db-sep">·</span>
+          <a href={store.instagram} target="_blank" rel="noreferrer">
+            Instagram
+          </a>
         </div>
       </div>
 
-      <div className="sf-masthead">
-        <Link href="/" className="sf-logo">
-          <span className="sf-logo-main">{store.name}</span>
-          <span className="sf-logo-sub">Secondhand books in Brockley</span>
-        </Link>
+      <div className="db-masthead">
+        <div className="db-container db-masthead-inner">
+          <button
+            type="button"
+            className="db-menu-btn"
+            aria-expanded={menuOpen}
+            aria-controls="site-drawer"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            Menu
+          </button>
+          <Link href="/" className="db-logo">
+            <span className="db-logo-main">{store.name}</span>
+            <span className="db-logo-sub">for readers in Brockley</span>
+          </Link>
+          <form className="db-search" onSubmit={onSearch}>
+            <label className="sr-only" htmlFor="shelf-search">
+              Search
+            </label>
+            <input
+              id="shelf-search"
+              type="search"
+              placeholder="Search titles or authors"
+              value={localQuery}
+              onChange={(e) => setLocalQuery(e.target.value)}
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
       </div>
 
-      <div className="sf-toolbar">
-        <button
-          type="button"
-          className="sf-icon-btn"
-          aria-expanded={menuOpen}
-          aria-controls="site-drawer"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <IconMenu />
-        </button>
-        <form className="sf-search" onSubmit={onSearch}>
-          <label className="sr-only" htmlFor="shelf-search">
-            Search author, title, or keyword
-          </label>
-          <input
-            id="shelf-search"
-            type="search"
-            placeholder="author, title, or keyword"
-            value={localQuery}
-            onChange={(e) => setLocalQuery(e.target.value)}
-          />
-          <button type="submit" className="sf-btn-search" aria-label="Search">
-            <IconSearch />
-          </button>
-        </form>
-      </div>
+      <nav className="db-nav" aria-label="Primary">
+        <ul className="db-container db-nav-list">
+          {nav.map((item) => (
+            <li key={item.label}>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <div
-        className={`sf-drawer-backdrop ${menuOpen ? "is-open" : ""}`}
+        className={`db-drawer-backdrop ${menuOpen ? "is-open" : ""}`}
         onClick={() => setMenuOpen(false)}
         aria-hidden={!menuOpen}
       />
       <aside
         id="site-drawer"
-        className={`sf-drawer ${menuOpen ? "is-open" : ""}`}
+        className={`db-drawer ${menuOpen ? "is-open" : ""}`}
         aria-hidden={!menuOpen}
       >
-        <div className="sf-drawer-head">
+        <div className="db-drawer-head">
           <strong>Menu</strong>
-          <button
-            type="button"
-            className="sf-drawer-close"
-            onClick={() => setMenuOpen(false)}
-          >
+          <button type="button" onClick={() => setMenuOpen(false)}>
             Close
           </button>
         </div>
-        <ul className="sf-drawer-nav">
+        <ul>
           {nav.map((item) => (
             <li key={item.label}>
               <a href={item.href} onClick={() => setMenuOpen(false)}>
@@ -130,10 +115,6 @@ export function SiteHeader() {
             </li>
           ))}
         </ul>
-        <p className="sf-drawer-hint">
-          Start with Our Story or Visit Us if you are new. Browse Featured Items
-          when you know what you are looking for.
-        </p>
       </aside>
     </header>
   );
