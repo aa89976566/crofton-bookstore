@@ -8,7 +8,7 @@ export function About() {
       <figure className="sf-visit-photo">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={asset("/images/gmaps-03-shelves.jpg")}
+          src={asset("/images/hero-04-interior.jpg")}
           alt="Secondhand books on wooden shelves inside Crofton Books"
         />
         <figcaption>

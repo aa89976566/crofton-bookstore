@@ -12,7 +12,7 @@ export function Visit() {
       <figure className="sf-visit-photo">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={asset("/images/gmaps-01-storefront.jpg")}
+          src={asset("/images/visit-storefront.jpg")}
           alt="Crofton Books storefront on Brockley Road"
         />
         <figcaption>
