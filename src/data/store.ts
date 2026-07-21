@@ -20,7 +20,7 @@ export const store = {
   instagram: "https://www.instagram.com/croftonbooks/",
   instagramHandle: "@croftonbooks",
   threads: "https://www.threads.com/@croftonbooks",
-  mapsUrl: "https://maps.app.goo.gl/nMizouFLfMVpvbLV8",
+  mapsUrl: "https://maps.app.goo.gl/UskgfnzA5LR82B5Y6?g_st=ic",
   owner: "Jason Shelley",
   established: 2021,
   hours: [

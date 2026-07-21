@@ -1,4 +1,5 @@
 import { store } from "@/data/store";
+import { asset } from "@/lib/paths";
 
 export function Visit() {
   return (
@@ -8,6 +9,19 @@ export function Visit() {
         Come in person when you can. The online shelf is only a slice of what is
         on the floor at {store.address.line1}.
       </p>
+      <figure className="sf-visit-photo">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={asset("/images/shop-hero.jpg")}
+          alt="Crofton Books storefront on Brockley Road"
+        />
+        <figcaption>
+          Photo from{" "}
+          <a href={store.mapsUrl} target="_blank" rel="noreferrer">
+            Google Maps
+          </a>
+        </figcaption>
+      </figure>
       <p>
         <strong style={{ color: "var(--ink)" }}>{store.name}</strong>
         <br />

@@ -839,6 +839,25 @@ button {
   margin: 1rem 0 0.25rem;
 }
 
+.sf-visit-photo {
+  margin: 0 0 1.1rem;
+  max-width: 36rem;
+}
+
+.sf-visit-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.sf-visit-photo figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
 .sf-hours,
 .sf-plain,
 .sf-steps,

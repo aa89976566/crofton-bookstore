@@ -4,18 +4,23 @@ import { useEffect, useState } from "react";
 import { store } from "@/data/store";
 import { asset } from "@/lib/paths";
 
+/** Photos from the Crofton Books Google Maps listing. */
 const slides = [
   {
     src: asset("/images/shop-hero.jpg"),
-    alt: "Independent bookshop shelves and reading space",
-  },
-  {
-    src: asset("/images/shop-hero-2.jpg"),
-    alt: "Colourful secondhand book spines on shop shelves",
+    alt: "Crofton Books storefront on Brockley Road with the shop sign and window displays",
   },
   {
     src: asset("/images/shop-interior.jpg"),
-    alt: "Quiet bookshop aisle lined with titles",
+    alt: "Looking into Crofton Books from the pavement, shelves packed wall to wall",
+  },
+  {
+    src: asset("/images/shop-hero-3.jpg"),
+    alt: "Wooden shelves inside Crofton Books filled with secondhand titles",
+  },
+  {
+    src: asset("/images/shop-hero-2.jpg"),
+    alt: "A title from the Crofton Books shelves, photographed in the shop",
   },
 ];
 
