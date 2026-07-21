@@ -20,26 +20,21 @@ export function Footer() {
         <div>
           <ul className="sf-footer-links">
             <li>
+              <a href="#featured">From the shelves</a>
+            </li>
+            <li>
               <a href="#shop">Browse</a>
             </li>
             <li>
-              <a href="#sell">Selling Books</a>
+              <a href="#about">About</a>
             </li>
             <li>
-              <a href="#how">Reserve</a>
-            </li>
-            <li>
-              <a href="#condition">Condition</a>
-            </li>
-            <li>
-              <a href="#visit">Contact</a>
+              <a href="#visit">Visit</a>
             </li>
           </ul>
         </div>
         <div>
-          <p>
-            Online display only. Hold by email. No account required.
-          </p>
+          <p>Online display only. Hold by email. No account required.</p>
           <p>
             <a href={store.instagram} target="_blank" rel="noreferrer">
               {store.instagramHandle}

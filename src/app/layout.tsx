@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Alegreya, Source_Sans_3 } from "next/font/google";
+import { EB_Garamond, Source_Sans_3 } from "next/font/google";
 import { BookDetail } from "@/components/BookDetail";
 import { Footer } from "@/components/Footer";
+import { HowToReserveModal } from "@/components/GuideSections";
 import { ReservePanel } from "@/components/ReservePanel";
 import { ShopProvider } from "@/components/ShopContext";
 import { SiteHeader } from "@/components/SiteHeader";
 import { store } from "@/data/store";
 import "./globals.css";
 
-const alegreya = Alegreya({
+const garamond = EB_Garamond({
   subsets: ["latin"],
-  variable: "--font-alegreya",
+  variable: "--font-garamond",
 });
 
 const sourceSans = Source_Sans_3({
@@ -35,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`h-full ${alegreya.variable} ${sourceSans.variable}`}>
+    <html lang="en-GB" className={`h-full ${garamond.variable} ${sourceSans.variable}`}>
       <body className="min-h-full antialiased">
         <ShopProvider>
           <SiteHeader />
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Footer />
           <BookDetail />
           <ReservePanel />
+          <HowToReserveModal />
         </ShopProvider>
       </body>
     </html>
