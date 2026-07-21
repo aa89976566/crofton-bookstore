@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { store } from "@/data/store";
 import { asset } from "@/lib/paths";
 
-/** Photos from the Crofton Books Google Maps listing. */
+/** Exterior and interior photos from the Crofton Books Google Maps listing. */
 const slides = [
   {
     src: asset("/images/gmaps-01-storefront.jpg"),
@@ -17,10 +17,6 @@ const slides = [
   {
     src: asset("/images/gmaps-03-shelves.jpg"),
     alt: "Wooden shelves inside Crofton Books filled with secondhand titles",
-  },
-  {
-    src: asset("/images/gmaps-04-title.jpg"),
-    alt: "A title from the Crofton Books shelves, photographed in the shop",
   },
 ];
 
