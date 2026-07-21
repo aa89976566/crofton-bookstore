@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[39756,["/crofton-bookstore/_next/static/chunks/175ijx1ea66cu.js","/crofton-bookstore/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
-3:I[37457,["/crofton-bookstore/_next/static/chunks/175ijx1ea66cu.js","/crofton-bookstore/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
+2:I[39756,["/crofton-bookstore/_next/static/chunks/3orwmogfmphwb.js","/crofton-bookstore/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
+3:I[37457,["/crofton-bookstore/_next/static/chunks/3orwmogfmphwb.js","/crofton-bookstore/_next/static/chunks/14mrh2-p_w84d.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"1EqhDdBNTpp_sY4FR74rs"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"w288O1bJNLpk6B2dB4NvQ"}
