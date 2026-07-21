@@ -44,14 +44,18 @@ export function FloatingChrome() {
               <button
                 key={item.label}
                 type="button"
-                className="chrome-nav__link"
+                className="chrome-nav__link btn-ink-line"
                 onClick={() => openReserve()}
               >
                 {item.label}
                 {count > 0 ? <span className="chrome-badge">{count}</span> : null}
               </button>
             ) : (
-              <a key={item.label} href={"href" in item ? item.href : "#"} className="chrome-nav__link">
+              <a
+                key={item.label}
+                href={"href" in item ? item.href : "#"}
+                className="chrome-nav__link btn-ink-line"
+              >
                 {item.label}
               </a>
             ),
@@ -62,14 +66,16 @@ export function FloatingChrome() {
           <div className="cat-wrap" ref={catRef}>
             <button
               type="button"
-              className="cat-btn"
+              className={`cat-btn ${catOpen ? "is-open" : ""}`}
               aria-expanded={catOpen}
               aria-haspopup="listbox"
               onClick={() => setCatOpen((v) => !v)}
             >
-              {category === "All" ? "Section" : category}
-              <span className="cat-chevron" aria-hidden>
-                ▾
+              <span className="cat-btn__label">
+                {category === "All" ? "Section" : category}
+              </span>
+              <span className="cat-btn__state" aria-hidden>
+                {catOpen ? "close" : "open"}
               </span>
             </button>
             {catOpen ? (
@@ -112,9 +118,6 @@ export function FloatingChrome() {
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
             />
-            <span className="search-icon" aria-hidden>
-              ⌕
-            </span>
           </div>
         </div>
       </div>
